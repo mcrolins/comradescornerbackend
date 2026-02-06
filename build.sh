@@ -6,4 +6,3 @@ python -m pip install gunicorn
 
 python manage.py collectstatic --noinput
 python manage.py migrate
-python manage.py create_admin
