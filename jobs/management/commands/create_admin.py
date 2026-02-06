@@ -10,10 +10,11 @@ class Command(BaseCommand):
 
         username = os.getenv("ADMIN_USERNAME", "mcrolins")
         email = os.getenv("ADMIN_EMAIL", "rolinsmac21@gmail.com")
-        password = os.getenv("comradesCornerAdmin")
+        password = os.getenv("ADMIN_PASSWORD")
 
         if not password:
-            raise RuntimeError("ADMIN_PASSWORD env var is not set")
+            self.stdout.write(self.style.WARNING("ADMIN_PASSWORD not set; skipping superuser creation"))
+            return
 
         user, created = User.objects.get_or_create(username=username)
         user.email = email
@@ -23,5 +24,4 @@ class Command(BaseCommand):
         user.save()
 
         self.stdout.write(self.style.SUCCESS("Superuser created" if created else "Superuser password reset"))
-
 
