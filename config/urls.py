@@ -40,16 +40,16 @@ urlpatterns = [
     path("jobs/<int:pk>/", JobDetailView.as_view(), name="job-detail"),
 
     # Visitor tracking
-    path("api/track-visit/", csrf_exempt(track_visit), name="track-visit"),
+    path("api/track-visit", csrf_exempt(track_visit), name="track-visit"),
 
     # Admin dashboard API
-    path("api/admin/login/", csrf_exempt(admin_login), name="admin-login"),
-    path("api/admin/logout/", csrf_exempt(admin_logout), name="admin-logout"),
-    path("api/admin/check/", csrf_exempt(admin_check), name="admin-check"),
-    path("api/admin/jobs/", csrf_exempt(admin_jobs_list), name="admin-jobs-list"),
-    path("api/admin/jobs/create/", csrf_exempt(admin_job_create), name="admin-job-create"),
-    path("api/admin/jobs/<int:pk>/delete/", csrf_exempt(admin_job_delete), name="admin-job-delete"),
-    path("api/admin/jobs/<int:pk>/update/", csrf_exempt(admin_job_update), name="admin-job-update"),
-    path("api/admin/analytics/", csrf_exempt(admin_analytics), name="admin-analytics"),
+    path("api/admin/login", csrf_exempt(admin_login), name="admin-login"),
+    path("api/admin/logout", csrf_exempt(admin_logout), name="admin-logout"),
+    path("api/admin/check", csrf_exempt(admin_check), name="admin-check"),
+    path("api/admin/jobs", csrf_exempt(admin_jobs_list), name="admin-jobs-list"),
+    path("api/admin/jobs/create", csrf_exempt(admin_job_create), name="admin-job-create"),
+    path("api/admin/jobs/<int:pk>/delete", csrf_exempt(admin_job_delete), name="admin-job-delete"),
+    path("api/admin/jobs/<int:pk>/update", csrf_exempt(admin_job_update), name="admin-job-update"),
+    path("api/admin/analytics", csrf_exempt(admin_analytics), name="admin-analytics"),
 ]
 
