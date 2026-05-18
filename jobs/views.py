@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count, Avg, F, ExpressionWrapper, DurationField, Q
 from django.db.models.functions import TruncDate
 from rest_framework import generics, status
