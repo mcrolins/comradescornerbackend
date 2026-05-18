@@ -36,8 +36,31 @@ class Job(models.Model):
     deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    view_count = models.PositiveIntegerField(default=0)
+
     class Meta:
         ordering = ["-created_at"]
 
     def __str__(self):
         return f"{self.title} @ {self.company}"
+
+
+class SiteVisit(models.Model):
+    """Tracks anonymous visitor sessions – clock-in / clock-out."""
+    session_key = models.CharField(max_length=64)
+    clock_in = models.DateTimeField(auto_now_add=True)
+    clock_out = models.DateTimeField(null=True, blank=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+
+    @property
+    def duration_seconds(self):
+        if self.clock_out and self.clock_in:
+            return (self.clock_out - self.clock_in).total_seconds()
+        return None
+
+    class Meta:
+        ordering = ["-clock_in"]
+
+    def __str__(self):
+        return f"Visit {self.session_key[:8]}… @ {self.clock_in:%Y-%m-%d %H:%M}"

@@ -18,11 +18,36 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
 
-from jobs.views import JobDetailView, JobListCreateView
+from jobs.views import (
+    JobDetailView,
+    JobListCreateView,
+    track_visit,
+    admin_login,
+    admin_logout,
+    admin_check,
+    admin_jobs_list,
+    admin_job_create,
+    admin_job_delete,
+    admin_job_update,
+    admin_analytics,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", RedirectView.as_view(url="jobs/", permanent=False), name="home"),
     path("jobs/", JobListCreateView.as_view(), name="job-list"), 
     path("jobs/<int:pk>/", JobDetailView.as_view(), name="job-detail"),
+
+    # Visitor tracking
+    path("api/track-visit/", track_visit, name="track-visit"),
+
+    # Admin dashboard API
+    path("api/admin/login/", admin_login, name="admin-login"),
+    path("api/admin/logout/", admin_logout, name="admin-logout"),
+    path("api/admin/check/", admin_check, name="admin-check"),
+    path("api/admin/jobs/", admin_jobs_list, name="admin-jobs-list"),
+    path("api/admin/jobs/create/", admin_job_create, name="admin-job-create"),
+    path("api/admin/jobs/<int:pk>/delete/", admin_job_delete, name="admin-job-delete"),
+    path("api/admin/jobs/<int:pk>/update/", admin_job_update, name="admin-job-update"),
+    path("api/admin/analytics/", admin_analytics, name="admin-analytics"),
 ]
