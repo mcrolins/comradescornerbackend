@@ -160,3 +160,4 @@ REST_FRAMEWORK = {
 }
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-only")
+APPEND_SLASH = False
