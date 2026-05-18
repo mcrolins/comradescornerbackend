@@ -137,20 +137,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+# Read allowed frontend domains from env, fallback to localhost for dev
+frontend_urls = os.getenv("FRONTEND_URLS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+CORS_ALLOWED_ORIGINS = [url.strip() for url in frontend_urls if url.strip()]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
 
 # Session / cookie settings for cross-origin admin auth
-SESSION_COOKIE_SAMESITE = "Lax"
+# In production (cross-domain), SameSite MUST be 'None' and Secure MUST be True.
+SESSION_COOKIE_SAMESITE = "None" if not DEBUG else "Lax"
+SESSION_COOKIE_SECURE = not DEBUG  # True in prod, False in local dev
 SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = "Lax"
+
+CSRF_COOKIE_SAMESITE = "None" if not DEBUG else "Lax"
+CSRF_COOKIE_SECURE = not DEBUG
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
